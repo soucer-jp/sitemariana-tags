@@ -193,36 +193,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // --- 5. FAVICON DINÂMICO (Muda de cor com o tema) ---
-    function atualizarFavicon() {
-        const favicon = document.getElementById('dynamic-favicon');
-        if (!favicon) return;
-
-        // 1. Pega a cor atual do tema (usando um elemento dummy ou computed style)
-        // Vamos pegar a cor da variável --brand-600 que definimos no theme.css
-        const tempEl = document.createElement('div');
-        tempEl.className = 'text-brand-600';
-        document.body.appendChild(tempEl);
-        const corTema = getComputedStyle(tempEl).color; // Ex: "rgb(55, 120, 90)"
-        document.body.removeChild(tempEl);
-
-        // 2. Lê o arquivo SVG original
-        fetch('images/favicon.svg')
-            .then(response => response.text())
-            .then(svgText => {
-                // 3. Injeta a cor do tema no SVG (troca "currentColor" pela cor real)
-                // Precisamos codificar o caractere # se for hex, mas o getComputedStyle retorna RGB, que é seguro.
-                const novoSvg = svgText.replace('currentColor', corTema);
-                
-                // 4. Transforma em URL e aplica
-                const blob = new Blob([novoSvg], { type: 'image/svg+xml' });
-                const novaUrl = URL.createObjectURL(blob);
-                favicon.href = novaUrl;
-            })
-            .catch(err => console.log('Erro ao carregar favicon:', err));
-    }
-
-    // Roda ao carregar e se houver mudança de tema (opcional)
-    atualizarFavicon();
+     
 
 });
